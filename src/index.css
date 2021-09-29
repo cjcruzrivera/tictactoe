@@ -32,6 +32,10 @@ body {
     width: 55px;
   }
   
+  .buttons_history{
+      font-size: 25px;
+  }
+
   .square:focus {
     outline: none;
   }

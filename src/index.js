@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 function Square(props) {
+    var className = "square " + props.classBold;
+
     return (
-        <button className="square" onClick={props.onClick}>
+        <button className={className} onClick={props.onClick}>
             {props.value}
         </button>
     );
@@ -13,8 +15,13 @@ function Square(props) {
 class Board extends React.Component {
 
     renderSquare(i) {
+        var classBold = "";
+        if (i === this.props.move) {
+            classBold = "bold";
+        }
         return (
             <Square
+                classBold={classBold}
                 value={this.props.squares[i]}
                 onClick={() => this.props.onClick(i)}
             />
@@ -113,6 +120,7 @@ class Game extends React.Component {
                 <div className="game-board">
                     <Board
                         squares={current.squares}
+                        move = {current.move_location}
                         onClick={(i) => this.handleClick(i)}
                     />
                 </div>

@@ -17,12 +17,16 @@ body {
     margin-bottom: 10px;
   }
   
+  .bold {
+      font-weight: bold;
+      color: black !important;
+  }
+
   .square {
     background: rgba(206, 211, 252, 0.466);
     border: 1.5px solid rgb(37, 37, 37);
     float: left;
     font-size: 30px;
-    font-weight: bold;
     line-height: 55px;
     height: 55px;
     margin-right: -1px;
@@ -30,6 +34,7 @@ body {
     padding: 0;
     text-align: center;
     width: 55px;
+    color: rgb(95, 95, 95);
   }
   
   .buttons_history{

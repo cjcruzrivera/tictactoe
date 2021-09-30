@@ -104,17 +104,11 @@ class Game extends React.Component {
             for (let i = size - 1; i >= 0; i--) {
                 reversed.push(i);
             }
-            console.log(reversed);
         }
         const moves = history.map((step, move) => {
-            console.log("oldMove:");
-            console.log(move);
             if (!this.state.order) {
                 move = reversed[move];
             }
-            console.log("newMove:");
-            console.log(move);
-            
 
             const move_sign = step.squares[step.move_location];
             const desc = move ?
@@ -144,7 +138,11 @@ class Game extends React.Component {
             status = 'Winner: ' + winner.winner;
             winners = winner.line;
         } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            if (this.state.stepNumber === 9) {
+                status = 'Draw';
+            } else {
+                status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+            }
         }
         
         const icon = this.state.order ? <BiArrowFromTop /> : <BiArrowFromBottom />;

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BiArrowFromBottom, BiArrowFromTop } from 'react-icons/bi';
 import './index.css';
 
 function Square(props) {
@@ -57,6 +58,7 @@ class Game extends React.Component {
             }],
             xIsNext: true,
             stepNumber: 0,
+            order: true,
         };
     }
 
@@ -87,19 +89,26 @@ class Game extends React.Component {
         });
     }
 
-    render() {
-
-        const history = this.state.history;
-        const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current.squares);
-        let status;
-        if (winner) {
-            status = 'Winner: ' + winner;
-        } else {
-            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    moves(history) {
+        if (!this.state.order) {
+            history = history.reverse();
+            const size = history.length;
+            var reversed = [];
+            for (let i = size - 1; i >= 0; i--) {
+                reversed.push(i);
+            }
+            console.log(reversed);
         }
-
         const moves = history.map((step, move) => {
+            console.log("oldMove:");
+            console.log(move);
+            if (!this.state.order) {
+                move = reversed[move];
+            }
+            console.log("newMove:");
+            console.log(move);
+            
+
             const move_sign = step.squares[step.move_location];
             const desc = move ?
                 'Go to move #' + move + ". " + move_sign + ' at ' + getLocation(step.move_location) :
@@ -112,6 +121,25 @@ class Game extends React.Component {
                 </li>
             );
         })
+
+        return moves;
+    }
+
+    render() {
+
+        const history = this.state.history;
+        const current = history[this.state.stepNumber];
+        const winner = calculateWinner(current.squares);
+        var history_moves = history.slice()
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner;
+        } else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
+        
+        const icon = this.state.order ? <BiArrowFromTop /> : <BiArrowFromBottom />;
+        
         return (
             <div className="game">
                 <div className="game-board">
@@ -123,7 +151,8 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <div> <button className="buttons_history mt-20" onClick={() => {this.setState({order: !this.state.order})}} >Order: {icon}</button></div>
+                    <ol reversed={!this.state.order} className="mt-20">{this.moves(history_moves)}</ol>
                 </div>
             </div>
         );

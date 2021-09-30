@@ -61,3 +61,7 @@ body {
   .mt-20 {
     margin-top: 20px !important;
   }
+
+  .winner {
+    background: rgb(119, 170, 121);
+  }
